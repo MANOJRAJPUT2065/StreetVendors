@@ -19,10 +19,13 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:5000', {
+      const url = process.env.REACT_APP_SOCKET_URL || process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000';
+
+      const newSocket = io(url, {
+        transports: ['websocket', 'polling'],
         auth: {
-          token: localStorage.getItem('token')
-        }
+          token: localStorage.getItem('token'),
+        },
       });
 
       newSocket.on('connect', () => {
@@ -30,14 +33,18 @@ export const SocketProvider = ({ children }) => {
       });
 
       newSocket.on('notification', (notification) => {
-        setNotifications(prev => [notification, ...prev]);
+        setNotifications((prev) => [notification, ...prev]);
       });
 
       newSocket.on('orderUpdate', (order) => {
-        setNotifications(prev => [
+        setNotifications((prev) => [
           { type: 'order', message: `Order ${order._id} status: ${order.status}`, data: order },
-          ...prev
+          ...prev,
         ]);
+      });
+
+      newSocket.on('connect_error', (err) => {
+        console.error('Socket connect_error', err.message);
       });
 
       setSocket(newSocket);
@@ -51,7 +58,7 @@ export const SocketProvider = ({ children }) => {
   const value = {
     socket,
     notifications,
-    clearNotifications: () => setNotifications([])
+    clearNotifications: () => setNotifications([]),
   };
 
   return <SocketContext.Provider value={value}>{children}</SocketContext.Provider>;

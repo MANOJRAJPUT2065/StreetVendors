@@ -3,9 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="description" content="Street Vendors Digital Empowerment Platform" />
   <title>StreetVendors - Empowering Local Business</title>
+  <!-- Tailwind CDN fallback to ensure styles even if local CSS is stale -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+  </style>
 </head>
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
