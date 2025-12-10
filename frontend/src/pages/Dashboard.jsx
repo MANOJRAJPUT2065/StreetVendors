@@ -32,18 +32,19 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) return <div className="mx-auto max-w-6xl px-4 py-8 text-slate-200">Loading...</div>;
+  if (loading) return <div className="page-shell text-slate-200">Loading...</div>;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 text-slate-200">
-      <div className="flex items-center justify-between">
+    <div className="page-shell text-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm uppercase tracking-wide text-slate-400">Overview</p>
-          <h2 className="text-2xl font-semibold text-white">Your Expenses</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Overview</p>
+          <h2 className="text-3xl font-semibold text-white">Your Expenses</h2>
+          <p className="text-sm text-slate-400">Track spending, methods, and categories in one view.</p>
         </div>
         <Link
           to="/expenses/new"
-          className="rounded-lg bg-sky-500 px-4 py-2 font-semibold text-white shadow-md shadow-sky-500/30 transition hover:bg-sky-600"
+          className="rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 px-4 py-2 text-sm font-semibold text-slate-900 shadow-md shadow-sky-500/30 transition hover:opacity-90"
         >
           Add Expense
         </Link>
@@ -54,7 +55,16 @@ const Dashboard = () => {
         </div>
       )}
       {expenses.length === 0 ? (
-        <p className="mt-6 text-slate-300">No expenses yet. Start adding one!</p>
+        <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-white/5 p-6 text-center text-slate-300">
+          <p className="text-lg font-semibold text-white">No expenses yet</p>
+          <p className="mt-1 text-slate-400">Add your first expense to see insights here.</p>
+          <Link
+            to="/expenses/new"
+            className="mt-4 inline-flex items-center justify-center rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-sky-500/30 transition hover:bg-sky-600"
+          >
+            Add Expense
+          </Link>
+        </div>
       ) : (
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {expenses.map((expense) => (
